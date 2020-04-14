@@ -10,7 +10,7 @@ import './App.css';
 import {connect} from 'react-redux'
 import { setCurrentUser } from './redux/user/user.action'
 import {createStructuredSelector} from 'reselect'
-import {selectCurrentUser} from '../../crwn-clothing/src/redux/user/user.selector'
+import {selectCurrentUser} from './redux/user/user.selector'
 
 
 
