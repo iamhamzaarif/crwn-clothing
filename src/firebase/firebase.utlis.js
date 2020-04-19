@@ -43,6 +43,52 @@ const config= {
 
   }
 
+  export const addCollectiionAndDocument = async (collectionKey, objectToAdd) => {
+      const collectionRef = firestore.collection(collectionKey)
+      
+      const batch = firestore.batch();
+      objectToAdd.forEach(obj => {
+      const newDocRef = collectionRef.doc();
+       console.log(newDocRef);
+      batch.set(newDocRef,obj);
+   });
+   return await batch.commit()
+  }
+
+  // export const addCollectiionAndDocument = async (collectionKey, objectToAdd) => {
+  //   const collectionRef = firestore.collection(collectionKey)
+  //    // console.log(collectionRef);
+  //   const batch = firestore.batch();
+  //   objectToAdd.forEach(obj => {
+  //     const newDocRef = collectionRef.doc();
+  //    // console.log(newDocRef);
+  //     batch.set(newDocRef,obj);
+  //   });
+  //   return await batch.commit()
+
+
+  // }
+
+  export const convertCollectionSnapshotToMap = (collectionsSnapshot) =>{
+      const transformedCollection = collectionsSnapshot.docs.map(docSnapshot => {
+        const {items, title} = docSnapshot.data();
+
+        return {
+          routeName: encodeURI(title.toLowerCase()),
+          id: docSnapshot.id,
+          title,
+          items
+
+        }
+       
+      })
+      return transformedCollection.reduce((accu,collection)=>{
+        accu[collection.title.toLowerCase()] = collection;
+        return accu
+      }, {})
+     //console.log(transformedCollection)
+
+  }
   firebase.initializeApp(config);
   export const auth = firebase.auth();
   export const firestore = firebase.firestore();
@@ -52,4 +98,4 @@ const config= {
 
   export const signInWithGoogle = ( ) => auth.signInWithPopup(provider)
 
-  export default firebase; 
+  export default firebase
