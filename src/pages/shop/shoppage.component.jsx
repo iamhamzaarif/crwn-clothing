@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux' 
 ///import {createStructuredSelector} from 'reselect'
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions'
@@ -15,17 +15,13 @@ import CollectionOverviewConatiner from '../../component/collection-overveiw/col
 //const CollectionsPageWithSpinner = WithSpinner(CollectionPage)
 
 
-class ShopPage extends React.Component {
+const ShopPage = ({ fetchCollectionsStart, match }) => {
   
-  componentDidMount(){
-    const { fetchCollectionsStart } = this.props 
+  useEffect(()=>{
     fetchCollectionsStart()
-   
-  }
+  }, [fetchCollectionsStart])
 
-
-  render(){
-    const {match} = this.props
+ 
 
       return(<div className='shop-page'>
         
@@ -34,7 +30,7 @@ class ShopPage extends React.Component {
       </div>)
       }
       
-  }
+  
 
   // const mapStateToProps = createStructuredSelector({
    
